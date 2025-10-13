@@ -1,0 +1,243 @@
+/* The @media rule is used in media queries to apply different styles for different media types/devices. https://www.w3schools.com/cssref/css3_pr_mediaquery.php */
+@media screen {
+	body {
+		max-width: 95%;
+	}
+	
+	div#main {
+		max-width: 95%;
+	}
+}
+
+@media print {
+	th {
+		background-color: #ca003b !important;
+		print-color-adjust: exact; 
+	}
+	body {
+		max-width: 3508px; /* 2480 x 3508 Pixel is the width of an Din A4 sheet */
+	}
+	
+	div#main {
+		max-width: 100%;
+	}
+
+	@page {
+    	size: A4 landscape;
+	}
+}
+
+/* Global CSS */
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	background-color: #ffffff;
+	padding: 20px;
+}
+
+/* Flexbox container to place table and plot side by side */
+div#container {
+    display: flex;
+    justify-content: flex-start; /* Align items to the start (left) */ /*space-between;  Distribute space between elements */
+    align-items: flex-start; /* Align elements to the top */
+    gap: 20px; /* Add space between the table and the plot */
+	
+	/*background-color: #5DE2E7;*/
+}
+
+/* Adjust table width */
+table.report-info {
+	/*margin-top: 100px;*/
+	width: 80%;  /* Adjust table width as needed */
+	flex-shrink: 0; /* Prevent table from shrinking */
+	
+	/*background-color: #EFC3CA;*/
+}
+
+h1 {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+h1#title {
+	margin-right: auto;
+	margin-bottom: 80px;
+	width: 80%;
+}
+
+h2 {
+	margin-top: 50px;
+	margin-bottom: 20px;
+}
+
+h3 {
+	margin-top: 50px;
+	margin-bottom: 20px;
+}
+
+div#main {
+	border: 1px solid;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+div#title {
+	/*padding-bottom: 40px;*/
+	
+}
+
+table {
+	border-collapse: collapse;
+	border: 1px solid;
+	width: 98%;
+	/*font-size: 10pt;*/
+}
+
+table.nested {
+	border-collapse: collapse;
+	border: 1px solid;
+	width: 98%;
+	/*table-layout: fixed;*/
+}
+
+th, td {
+	text-align: left;
+	padding: 10px;
+	border-bottom: 1px solid;
+}
+
+td.Url {
+	max-width: 300px;
+	word-wrap: break-word;
+}
+
+/* Define specific widths for the outer table columns */
+table.report-info td:nth-child(1) {
+    width: 25%;
+	vertical-align: top;
+}
+
+table.report-info td:nth-child(2) {
+    width: 35%;
+    vertical-align: top;
+}
+
+/*table.report-info td:nth-child(3) {
+    width: 40%;
+}*/
+
+
+td.chart {
+	/*display: flex;
+	justify-content: left; 
+	align-items: flex-start; */
+	padding: 0;              
+	height: 100%;
+	/*max-width: 300px;*/
+	width: 100%;
+	/*border-bottom: 0px;*/
+}
+
+
+/* Ensure pie chart container doesn't exceed its parent */
+td.chart div.pieChart {
+	width: 100%;
+	margin: 0;
+	padding: 10px;
+	height: 300px;
+	
+	/*background-color: #060270;*/
+}
+
+th {
+	background-color: #ca003b;
+}
+
+img#ef_logo {
+	/*max-width: 80px;*/
+	max-height: 60px;
+	float: right;
+	margin: 10px 0px 15px 15px;
+}
+
+img.ef-wallpaper {
+	max-width: 200px;
+	max-height: 200px;
+}
+
+img.ef-guest {
+	max-width: 200px;
+	max-height: 200px;
+}
+
+img.ef-user {
+	max-width: 200px;
+	max-height: 200px;
+}
+
+img.icon {
+	max-width: 20px;
+	max-height: 20px;
+	padding: 0;
+	margin: 0;
+	vertical-align: middle;
+}
+
+a {
+	color: #ca003b;
+}
+
+a:hover {
+	color: black;
+}
+
+table.list-Updates {
+	/*font-size: 10pt;*/
+}
+
+table.list-syncedUpdates {
+	font-size: 8pt;
+}
+
+/* Define specific widths for the outer table columns */
+table.list-syncedUpdates td:nth-child(1) {
+	width: 10%
+}
+
+table.list-syncedUpdates td:nth-child(2) {
+	width: 10%
+}
+
+table.list-syncedUpdates td:nth-child(3) {
+	width: 10%
+}
+
+table.list-syncedUpdates td:nth-child(4) {
+	width: 10%
+}
+
+table.list-syncedUpdates td:nth-child(5) {
+	width: 10%
+}
+
+table.list-syncedUpdates td:nth-child(6) {
+	width: 10%
+}
+
+table.list-syncedUpdates td:nth-child(7) {
+	width: 20%
+}
+
+table.list-syncedUpdates td:nth-child(8) {
+	width: 20%
+}
+
+table.list-Updates td:nth-child(1) {
+    width: 10%;
+}
+table.list-Updates td:nth-child(2) {
+    width: 40%;
+}
+table.list-Updates td:nth-child(3) {
+    width: 40%;
+}
