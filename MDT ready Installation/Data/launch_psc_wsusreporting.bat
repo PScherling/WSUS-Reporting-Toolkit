@@ -1,7 +1,0 @@
-@echo off
-echo Modules are loading, please wait...
-timeout /t 5 /nobreak
-echo.
-echo Launching PSC Windows Update Services Reporting Module...
-C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -Command "Start-Process powershell -ArgumentList '-NoProfile -Command \"Import-Module psc_wsusreporting; psc_wsusreporting\"' -WindowStyle Maximized -Verb RunAs"
-REM C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -WindowStyle maximized -ExecutionPolicy Bypass -Command "Import-Module ef_wsusreporting; ef_wsusreporting"
