@@ -1,18 +1,46 @@
 <#
 .SYNOPSIS
-    
+    Interactive WSUS reporting and maintenance dashboard for Windows Server Update Services.
 .DESCRIPTION
-    
+    `psc_wsusreporting.ps1` is a menu-driven PowerShell tool that connects to the local WSUS
+    server via the Microsoft.UpdateServices.Administration API and provides at-a-glance status,
+    on-demand HTML reports, and safe maintenance actions.
+
+    What it shows (live status):
+      - Environment: hostname, domain, IP, timestamp
+      - Endpoint health: up-to-date, needing updates, with client errors, total clients
+      - Update health: installed, needed by computers, with client errors
+      - Server stats: approved / declined / pending-approval counts
+      - Synchronization: last sync time & result, auto/manual mode, in-progress status & %
+      - Content download: in-progress / none, bytes total vs. downloaded
+      - Connection info: HTTP/HTTPS, port, WSUS server version
+      - Cleanup history: last cleanup export timestamp and suggested next run
+
+    What it can do (menu actions):
+      1) Refresh dashboard
+      2) Generate **Endpoint Status Report** (HTML)
+      3) Generate **Update Status Report** (HTML)
+      4) Generate **Last Synchronization Report** (HTML)
+      5) **Run WSUS Cleanup** (decline superseded, etc.)
+      6) **Test-Run WSUS Cleanup** (no-decline / safe preview)
+
+    Operator experience:
+      - Clear, colorized console with a single-key menu
+      - Robust try/catch; all steps are timestamp-logged
+      - Uses the WSUS Admin API (no PSWindowsUpdate dependency)
+      - Stores exports like `SupersededUpdates*.csv` under an `Exports\` folder beside the script
+      - `$VersionNumber` banner reflects the current build
 .LINK
 	https://learn.microsoft.com/en-us/windows/win32/wua_sdk/windows-update-agent--wua--api-reference
     https://learn.microsoft.com/de-de/security-updates/WindowsUpdateServices/18127651
     https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms744624(v=vs.85)
     https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms748969(v=vs.85)
     https://learn.microsoft.com/en-us/previous-versions/windows/desktop/mt748187(v=vs.85)
+	https://github.com/PScherling
 
 .NOTES
           FileName: psc_wsusreporting.ps1
-          Solution: 
+          Solution: PSC_WSUS_Reporting
           Author: Patrick Scherling
           Contact: @Patrick Scherling
           Primary: @Patrick Scherling
@@ -34,10 +62,26 @@
 		  
 		  To-Do:
 			- 
+			
+.REQUIREMENTS
+    - Run on the WSUS server with Administrator privileges.
+    - PowerShell 5.1+ (or PowerShell 7.x on Windows).
+    - WSUS Administration components available (Microsoft.UpdateServices.Administration).
+    - Local file system write access for logs/exports.
+	- Internet connection to google and microsoft
 
-
+.OUTPUTS
+    - Console dashboard (colorized).
+    - Log file: C:\_it\psc_wsusreporting\Logfiles\psc_wsusreporting.log
+    - HTML reports (saved to the script directory or designated report path).
+    - CSV exports under: <script folder>\Exports\ (e.g., SupersededUpdates*.csv)
+	
 .Example
-    start ef_wsus-reproting
+    PS C:\> psc_wsusreporting
+    (When the helper module is installed) Starts the tool in a new, maximized PowerShell window.
+
+	PS C:\> powershell.exe -ExecutionPolicy Bypass -File "C:\_it\psc_wsusreporting\psc_wsusreporting.ps1"
+    Launches the WSUS Reporting Tool and opens the interactive dashboard.
 #>
 
 # Version number
@@ -4217,3 +4261,4 @@ function Start-EF_Gen-UpdateStatusReport {
 #### Main Menu Selection
 ####
 Show-Menu
+
