@@ -1,4 +1,5 @@
 # PSC WSUS Reporting Toolkit
+<img width="1596" height="874" alt="image" src="https://github.com/user-attachments/assets/020e3988-7ffb-49e3-85b7-00776839921d" />
 
 Menu-driven PowerShell tooling to **inspect**, **report**, and **maintain** Windows Server Update Services (WSUS).  
 Includes automated and manual installers, a lightweight module launcher, and the interactive reporting dashboard.
@@ -100,6 +101,8 @@ Key locations used by the solution:
 ---
 
 ## 🚀 Usage
+### Start via desktop link (recommended)
+<img width="117" height="82" alt="image" src="https://github.com/user-attachments/assets/1c87d6d4-2061-4f52-b095-60682dde67d1" />
 
 ### Start via Module (recommended)
 ```powershell
@@ -119,9 +122,20 @@ You’ll see the **Windows Server Update Services Reporting Tool** menu. Use the
 ## 📑 Reports & Exports
 
 - **Endpoint Status Report** (HTML)
+  <img width="1596" height="874" alt="image" src="https://github.com/user-attachments/assets/5dd3e318-0cb5-49fc-95d4-dd8a6799e13c" />
+  <img width="1593" height="801" alt="image" src="https://github.com/user-attachments/assets/812d4be0-fd79-4576-b886-eacc10df3d8a" />
+
 - **Update Status Report** (HTML)
+  <img width="1596" height="874" alt="image" src="https://github.com/user-attachments/assets/5a2f6e1d-aead-4b46-98cf-5c9493763f85" />
+  <img width="1593" height="801" alt="image" src="https://github.com/user-attachments/assets/6775e81f-5a9f-41a4-9550-8be5aedf3bf4" />
+
 - **Last Synchronization Report** (HTML)
+  <img width="1596" height="874" alt="image" src="https://github.com/user-attachments/assets/8d624d95-5f7e-4555-b19c-50ac54888257" />
+  <img width="1593" height="801" alt="image" src="https://github.com/user-attachments/assets/c48195f3-d8c7-4a41-94b7-213da916dd21" />
+
 - **Cleanup Exports**: `Exports\SupersededUpdates*.csv` (the tool reads latest export timestamp to suggest next cleanup)
+  <img width="1593" height="801" alt="image" src="https://github.com/user-attachments/assets/3a774857-32a3-4a5c-a2fe-be32e7b30725" />
+
 
 > Reports are saved alongside the script unless otherwise configured inside your report functions.
 
@@ -184,12 +198,6 @@ A: Update the `$VersionNumber` variable inside `psc_wsusreporting.ps1`.
 ## 🤝 Contributing
 
 Issues and PRs are welcome. Please avoid including real server names, IPs, or credentials in examples.
-
----
-
-## 📜 License
-
-Add your preferred license (e.g., MIT).
 
 ---
 
