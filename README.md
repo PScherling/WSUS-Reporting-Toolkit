@@ -1,207 +1,209 @@
-# README - PSC WSUS Reporting
-Menu-driven PowerShell tooling to report on and maintain Windows Server Update Services (WSUS).
-Includes a lightweight launcher module, an interactive dashboard script, and both manual and automated (MDT/WDS) installers.
+# PSC WSUS Reporting Toolkit
 
-## Components
+Menu-driven PowerShell tooling to **inspect**, **report**, and **maintain** Windows Server Update Services (WSUS).  
+Includes automated and manual installers, a lightweight module launcher, and the interactive reporting dashboard.
 
-psc_wsusreporting.ps1 — Main interactive dashboard (reports + cleanup).
+---
 
-psc_wsusreporting.psm1 — Launcher module exposing the psc_wsusreporting command (starts the tool in a new, maximized PowerShell window).
+## ✨ Features
 
-manual_Install-PSC_wsus-report-tool.ps1 — Local/manual installer using the repository’s .\Data folder.
+- **Interactive dashboard** (console UI) showing:
+  - Endpoint health: up-to-date, needing updates, with client errors, total clients
+  - Update health: installed, needed by computers, with client errors
+  - Server stats: approved, declined, pending-approval counts
+  - Synchronization: last sync result & time, auto/manual mode, progress %, content download status
+  - Connection info: HTTP/HTTPS, port, WSUS server version
+  - Cleanup info: last cleanup timestamp & suggested next run
+- **One-key actions**:
+  1. Refresh dashboard  
+  2. Generate **Endpoint Status Report** (HTML)  
+  3. Generate **Update Status Report** (HTML)  
+  4. Generate **Last Synchronization Report** (HTML)  
+  5. **Run WSUS Cleanup**  
+  6. **Test-Run WSUS Cleanup** (no-decline preview)
+- **Robust logging** with timestamps
+- **Role separation**: main tool + module + installers (manual & MDT/WDS)
 
-custom_Install-PSC_wsus-report-tool.ps1 — Automated installer for MDT/WDS that pulls from \\<MDT_FileSrv>\DeploymentShare$.
+---
 
-Launchers / Shortcuts
+## 📦 Repository Contents
 
-psc_wsusreporting.cmd in %SystemRoot%\System32 (CLI convenience)
+| Path / Script | Purpose |
+|---|---|
+| `psc_wsusreporting.ps1` | Main interactive dashboard + reporting + cleanup actions (runs on WSUS server). |
+| `psc_wsusreporting.psm1` | Module launcher that opens the tool in a new, maximized PowerShell window. |
+| `manual_Install-PSC_wsus-report-tool.ps1` | Local/manual installer (uses local `.\Data` folder as source). |
+| `custom_Install-PSC_wsus-report-tool.ps1` | Automated installer for MDT/WDS (pulls from `\\<MDT_FileSrv>\DeploymentShare$`). |
+| `Data\` | Payload used by the installers (module files, launcher, any assets). |
+| `Logfiles\` | Local log directory used by the tool (created at runtime under `C:\_it\psc_wsusreporting\Logfiles`). |
 
-launch_psc_wsusreporting.bat (used by desktop shortcut)
+> The dashboard displays the value of `$VersionNumber` embedded in `psc_wsusreporting.ps1`.
 
-Desktop shortcut EF_WSUS-Report-Tool.lnk (created by installers)
+---
 
-## What it does
-Live WSUS Dashboard
+## 🧱 Requirements
 
-From psc_wsusreporting.ps1, you get an at-a-glance status using the WSUS Admin API:
+- Run on the **WSUS server** (local WSUS Admin API access)
+- **Administrator** PowerShell session
+- **PowerShell 5.1+** (or PowerShell 7.x on Windows)
+- **WSUS Administration API** available: `Microsoft.UpdateServices.Administration`
+- Local write access for logs and reports
+- (Automated install) Network access to your deployment and log shares
 
-Environment: hostname, domain, IP, timestamp
+---
 
-Endpoint health: up-to-date, needing updates, with client errors, total clients
+## 🔧 Installation
 
-Update health: installed, needed by computers, with client errors
-
-Server stats: approved / declined / pending approval counts
-
-Synchronization: last sync time + result, auto/manual, in-progress state and %
-
-Content download: progress/bytes (if any)
-
-Connection: HTTP/HTTPS, port, WSUS server version
-
-Cleanup: last cleanup export timestamp and suggested next run
-
-Actions (menu)
-
-Refresh dashboard
-
-Generate Endpoint Status Report (HTML)
-
-Generate Update Status Report (HTML)
-
-Generate Last Synchronization Report (HTML)
-
-Run WSUS Cleanup (declines superseded, etc.)
-
-Test-Run WSUS Cleanup (safe preview, no decline)
-
-All operations are timestamp-logged.
-
-## Requirements
-
-Run on the WSUS server with Administrator privileges
-
-Windows PowerShell 5.1 (or PowerShell 7.x on Windows)
-
-WSUS Administration components (Microsoft.UpdateServices.Administration assembly)
-
-Local write access for logs/exports (default under C:\_it\psc_wsusreporting)
-
-(Automated install) Network access to:
-
-\\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data
-
-\\<MDT_FileSrv>\Logs$\Custom\Configuration
-
-## Install
-A) Manual install (local)
-Run as Administrator from the repo root (or your package folder)
-Unblock-File .\manual_Install-PSC_wsus-report-tool.ps1
-powershell.exe -ExecutionPolicy Bypass -File .\manual_Install-PSC_wsus-report-tool.ps1
-
+### Option A — Automated (MDT/WDS)
+Use: `custom_Install-PSC_wsus-report-tool.ps1`
 
 What it does:
+- Copies payload from: `\\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data` → `C:\_it\psc_wsusreporting`
+- Creates module path: `C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting`
+- Copies `psc_wsusreporting.psm1/.psd1` into module path
+- Copies `psc_wsusreporting.cmd` into `C:\Windows\System32`
+- Imports module, creates desktop shortcut **EF_WSUS-Report-Tool.lnk** to `launch_psc_wsusreporting.bat`
+- Logs locally then uploads to: `\\<MDT_FileSrv>\Logs$\Custom\Configuration`
 
-Copies tool files from .\Data → C:\_it\psc_wsusreporting\
-
-Installs module → C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting\
-
-Places psc_wsusreporting.cmd in %SystemRoot%\System32
-
-Imports the module
-
-Creates desktop shortcut EF_WSUS-Report-Tool.lnk
-
-B) Automated install (MDT/WDS)
-Run as Administrator (deployed as a task-sequence step)
-Unblock-File .\custom_Install-PSC_wsus-report-tool.ps1
+Run (as Admin) in your task sequence:
+```powershell
 powershell.exe -ExecutionPolicy Bypass -File .\custom_Install-PSC_wsus-report-tool.ps1
+```
 
+### Option B — Manual (Local)  
+Use: `manual_Install-PSC_wsus-report-tool.ps1`
 
 What it does:
+- Copies payload from local `.\Data` → `C:\_it\psc_wsusreporting`
+- Installs module files and `psc_wsusreporting.cmd`
+- Imports module, creates desktop shortcut
+- Logs to `C:\_it\Configure_ef_psc_wsusreporting_*.log`
 
-Copies from deployment share → C:\_it\psc_wsusreporting\ (preserves structure)
+Run (as Admin):
+```powershell
+powershell.exe -ExecutionPolicy Bypass -File .\manual_Install-PSC_wsus-report-tool.ps1
+```
 
-Installs module + system launcher
+---
 
-Imports module
+## ⚙️ Configuration
 
-Creates desktop shortcut
+Key locations used by the solution:
 
-Uploads the installer log to \\<MDT_FileSrv>\Logs$\Custom\Configuration
+- **Main tool logs**: `C:\_it\psc_wsusreporting\Logfiles\psc_wsusreporting.log`
+- **Installer logs** (pattern): `C:\_it\Configure_ef_psc_wsusreporting_<COMPUTERNAME>_<YYYY-MM-DD_HH-mm-ss>.log`
+- **Desktop shortcut**: `EF_WSUS-Report-Tool.lnk` → `C:\_it\psc_wsusreporting\launch_psc_wsusreporting.bat`
+- **Module path**: `C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting\`
 
-## Usage
-Start the dashboard
+> Update the installer variables for your deployment server (`$FileSrv`) and log share paths if needed.
 
-If the module is installed:
+---
+
+## 🚀 Usage
+
+### Start via Module (recommended)
+```powershell
+Import-Module psc_wsusreporting
 psc_wsusreporting
+```
 
-Or run the script directly:
+### Start via Script
+```powershell
 powershell.exe -ExecutionPolicy Bypass -File "C:\_it\psc_wsusreporting\psc_wsusreporting.ps1"
+```
 
-Typical flow
+You’ll see the **Windows Server Update Services Reporting Tool** menu. Use the keys shown to generate HTML reports, run cleanup, or refresh.
 
-Launch the dashboard → review live status
+---
 
-Generate HTML reports as needed
+## 📑 Reports & Exports
 
-Run a test cleanup (option 6) to preview impact
+- **Endpoint Status Report** (HTML)
+- **Update Status Report** (HTML)
+- **Last Synchronization Report** (HTML)
+- **Cleanup Exports**: `Exports\SupersededUpdates*.csv` (the tool reads latest export timestamp to suggest next cleanup)
 
-Run cleanup (option 5) when ready
+> Reports are saved alongside the script unless otherwise configured inside your report functions.
 
-## Configuration Highlights
+---
 
-The dashboard shows $VersionNumber in its header (e.g., 0.1.x).
+## 📝 Logging
 
-Installers create/use:
+The tool uses a simple `Write-Log` function to append timestamped entries:
+- `C:\_it\psc_wsusreporting\Logfiles\psc_wsusreporting.log`
 
-C:\_it\psc_wsusreporting\
+Installers write their own **timestamped** logs and (for automated installs) attempt to upload them to your deployment log share.
 
-C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting\
+---
 
-%SystemRoot%\System32\psc_wsusreporting.cmd
+## 🔐 Security Notes
 
-If you maintain a deployment share:
+- Run only on trusted admin workstations/servers.
+- Limit access to deployment/log shares.
+- If you adapt the tool to publish reports to a share or web location, ensure proper ACLs and avoid exposing internal WSUS data externally.
 
-Update custom_Install-PSC_wsus-report-tool.ps1 with your server name/IP:
+---
 
-\\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data
+## 🛠️ Troubleshooting
 
-\\<MDT_FileSrv>\Logs$\Custom\Configuration
+- **WSUS API not found**  
+  Ensure the WSUS console / admin components are installed on the machine running the tool.
 
-## Logs & Outputs
+- **Access denied / reports not generated**  
+  Run PowerShell as **Administrator**. Verify folder permissions and paths.
 
-Tool log:
-C:\_it\psc_wsusreporting\Logfiles\psc_wsusreporting.log
+- **Sync progress shows “Collecting Data”**  
+  That’s normal at the very beginning of a sync; the tool switches to percentages once totals are known.
 
-Installer logs:
-C:\_it\Configure_psc_wsusreporting_<COMPUTERNAME>_<YYYY-MM-DD_HH-mm-ss>.log
-(Automated installer also uploads to \\<MDT_FileSrv>\Logs$\Custom\Configuration)
+- **Cleanup suggestions show “No Data”**  
+  The suggestion relies on a prior `SupersededUpdates*.csv` export. Run a cleanup/export first.
 
-Reports/Exports:
+---
 
-HTML reports saved beside the script (or your chosen report path)
+## ❓ FAQ
 
-Cleanup export CSVs under:
-..\script folder\Exports\SupersededUpdates*.csv
+**Q: Can I run this from a management server that isn’t the WSUS server?**  
+A: The tool connects via the local WSUS Admin API. Run it **on the WSUS server** for best results.
 
-## Security Notes
+**Q: Does the tool require PSWindowsUpdate?**  
+A: No. It uses the WSUS Administration API (`Microsoft.UpdateServices.Administration`).
 
-Run from elevated PowerShell.
+**Q: Where do I change the version number shown in the UI?**  
+A: Update the `$VersionNumber` variable inside `psc_wsusreporting.ps1`.
 
-Limit access to report and log shares.
+---
 
-If you extend the tool to copy reports to a remote share, prefer:
+## 🧭 Roadmap
 
-Computer account permissions / Kerberos
+- Optional publish of reports to a central, access-controlled share
+- Optional HTML theme customization & branding
+- Additional WSUS health checks (database, IIS bindings, SSL validation)
 
-Managed identities / GMSA
+---
 
-SecretManagement for credential retrieval
+## 🤝 Contributing
 
-Review WSUS cleanup behavior in a lab before production use.
+Issues and PRs are welcome. Please avoid including real server names, IPs, or credentials in examples.
 
-## Troubleshooting
+---
 
-“Cannot load WSUS Admin assembly”
-Ensure WSUS server components are installed on the machine running the tool.
+## 📜 License
 
-“Access denied” when creating files
-Verify NTFS permissions on C:\_it\psc_wsusreporting\ and subfolders.
+Add your preferred license (e.g., MIT).
 
-No sync progress shown
-Sync may not be running; start a WSUS sync and refresh the dashboard.
+---
 
-Empty counts
-First-time or stale WSUS deployments might need synchronization and/or client check-ins.
+## 🔗 References
 
+- Windows Update Agent (WUA) API:  
+  https://learn.microsoft.com/en-us/windows/win32/wua_sdk/windows-update-agent--wua--api-reference
+- WSUS product info & guidance:  
+  https://learn.microsoft.com/en-us/windows-server/administration/windows-server-update-services/
+- Legacy WSUS API refs (for background):  
+  https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms744624(v=vs.85)  
+  https://learn.microsoft.com/en-us/previous-versions/windows/desktop/ms748969(v=vs.85)  
+  https://learn.microsoft.com/en-us/previous-versions/windows/desktop/mt748187(v=vs.85)
 
-## References
+---
 
-Windows Update Agent (WUA) API
-https://learn.microsoft.com/en-us/windows/win32/wua_sdk/windows-update-agent--wua--api-reference
-
-WSUS Admin & Ops Guidance
-https://learn.microsoft.com/en-us/windows-server/administration/windows-server-update-services/
-
-PowerShell WSUS Admin Samples (community articles and examples are referenced in script headers)
+**Author:** Patrick Scherling (@Patrick Scherling)
