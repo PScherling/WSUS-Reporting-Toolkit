@@ -1,13 +1,33 @@
 <#
 .SYNOPSIS
-
+	Automated (MDT/WDS) install of the PSC WSUS Reporting Tool from a deployment share.
 .DESCRIPTION
-    
+    `custom_Install-PSC_wsus-report-tool.ps1` installs the PSC WSUS Reporting Tool on a target
+    system by pulling its payload from a deployment share and performing post-copy setup.
+
+    What it does:
+      - Copies all files from: \\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data
+        to: C:\_it\psc_wsusreporting  (preserves subfolders)
+      - Creates the module path: C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting
+      - Copies module files (.psm1 / .psd1) into the module path
+      - Copies launcher: C:\Windows\System32\psc_wsusreporting.cmd
+      - Imports the `psc_wsusreporting` module
+      - Creates a desktop shortcut: “EF_WSUS-Report-Tool.lnk” → launch_psc_wsusreporting.bat
+      - Writes a timestamped installer log locally and uploads it to the deployment log share
+
+    Operator experience:
+      - Uses `$PSScriptRoot`-independent network source with progress output
+      - Robust try/catch with explicit step logging
+      - Local log at: C:\_it\Configure_psc_wsusreporting_<Computer>_<DateTime>.log
+        and upload to: \\<MDT_FileSrv>\Logs$\Custom\Configuration
 .LINK
-    
+    https://learn.microsoft.com/windows/win32/wua_sdk/windows-update-agent--wua--api-reference
+    https://learn.microsoft.com/windows-server/administration/windows-server-update-services/
+	https://github.com/PScherling
+	
 .NOTES
           FileName: custom_Install-PSC_wsus-report-tool.ps1
-          Solution: 
+          Solution: PSC_WSUS_Reporting (Automated)
           Author: Patrick Scherling
           Contact: @Patrick Scherling
           Primary: @Patrick Scherling
@@ -19,14 +39,31 @@
 
           TODO:
 		  
+.REQUIREMENTS
+    - Run as Administrator.
+    - Network connectivity and permissions to:
+        - \\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data
+        - \\<MDT_FileSrv>\Logs$\Custom\Configuration
+    - Write access to:
+        - C:\_it\
+        - C:\Windows\System32\
+        - C:\Program Files\WindowsPowerShell\Modules\
+    - PowerShell 5.1+ (or PowerShell 7.x on Windows).		
+
+.OUTPUTS
+    Console output and log file:
+        Local   : C:\_it\Configure_psc_wsusreporting_<COMPUTERNAME>_<YYYY-MM-DD_HH-mm-ss>.log
+        Remote  : \\<MDT_FileSrv>\Logs$\Custom\Configuration\<same name>.log
 		
 .Example
+	PS C:\> .\custom_Install-PSC_wsus-report-tool.ps1
+    Pulls the WSUS Reporting Tool from the deployment share, installs the module, creates a desktop shortcut, imports the module, and uploads the installation log.
 #>
 function Start-Configuration {
     # Variables
-    $user = "wds.usr"
-    $pass = "YjVloU2hdKZEyN6em5Zu"
-	$FileSrv = "192.168.121.66"
+    $user = "wdsuser"
+    $pass = "Password"
+	$FileSrv = "0.0.0.0" # MDT Server IP-Address
 	
     $dest = "C:\_it\psc_wsusreporting"
     $source = "\\$($FileSrv)\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data"
@@ -292,5 +329,6 @@ function Start-Configuration {
 		Reason: $_"
 	}#>
 }
+
 
 Start-Configuration
