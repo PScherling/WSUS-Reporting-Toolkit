@@ -1,13 +1,32 @@
 <#
 .SYNOPSIS
-
+	Manually installs the PSC WSUS Reporting Tool and its PowerShell module on the local system.
 .DESCRIPTION
-    
+    `manual_Install-PSC_wsus-report-tool.ps1` performs a local, manual installation of the
+    PSC WSUS Reporting Tool without needing a deployment server.
+
+    What it does:
+      - Copies all tool files from the script’s local `.\Data` folder into `C:\_it\psc_wsusreporting`
+      - Creates the module folder: C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting
+      - Copies `psc_wsusreporting.psm1/.psd1` into the module folder
+      - Copies `psc_wsusreporting.cmd` into `C:\Windows\System32` for easy shell launch
+      - Imports the `psc_wsusreporting` module
+      - Creates a desktop shortcut (EF_WSUS-Report-Tool.lnk) targeting `launch_psc_wsusreporting.bat`
+      - Writes timestamped logs to `C:\_it\<Configure_ef_psc_wsusreporting_*.log>`
+
+    The script is verbose and operator-friendly:
+      - Uses `$PSScriptRoot` to resolve its own `.\Data` source folder
+      - Provides progress messages and clear success/error output
+      - Includes robust try/catch error handling and logging for each step
+	  
 .LINK
-    
+    https://learn.microsoft.com/windows/win32/wua_sdk/windows-update-agent--wua--api-reference
+    https://learn.microsoft.com/windows-server/administration/windows-server-update-services/get-started/windows-server-update-services-wsus
+	https://github.com/PScherling
+	
 .NOTES
           FileName: manual_Install-PSC_wsus-report-tool.ps1
-          Solution: 
+          Solution: PSC_WSUS_Reporting
           Author: Patrick Scherling
           Contact: @Patrick Scherling
           Primary: @Patrick Scherling
@@ -18,9 +37,25 @@
           
 
           TODO:
-		  
+
+.REQUIREMENTS
+    - Run as Administrator.
+    - PowerShell 5.1+ (or PowerShell 7.x on Windows).
+    - Sufficient permissions to write to:
+        - C:\_it\
+        - C:\Windows\System32\
+        - C:\Program Files\WindowsPowerShell\Modules\
+
+.OUTPUTS
+    Console output and installer log:
+        C:\_it\Configure_ef_psc_wsusreporting_<COMPUTERNAME>_<YYYY-MM-DD_HH-mm-ss>.log
 		
 .Example
+	PS C:\> .\manual_Install-PSC_wsus-report-tool.ps1
+    Runs the local/manual installer using the script’s .\Data source folder.
+
+	PS C:\> powershell.exe -ExecutionPolicy Bypass -File "C:\Install\manual_Install-PSC_wsus-report-tool.ps1"
+    Executes the installer from a local path, bypassing execution policy for the session.
 #>
 function Start-Configuration {
     ### 
@@ -283,5 +318,6 @@ function Start-Configuration {
 	#>
 	Read-Host -prompt " Press any key to finish..."
 }
+
 
 Start-Configuration
