@@ -20,6 +20,18 @@
       - Robust try/catch with explicit step logging
       - Local log at: C:\_it\Configure_psc_wsusreporting_<Computer>_<DateTime>.log
         and upload to: \\<MDT_FileSrv>\Logs$\Custom\Configuration
+
+	Requirements:
+    - Run as Administrator.
+    - Network connectivity and permissions to:
+        - \\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data
+        - \\<MDT_FileSrv>\Logs$\Custom\Configuration
+    - Write access to:
+        - C:\_it\
+        - C:\Windows\System32\
+        - C:\Program Files\WindowsPowerShell\Modules\
+    - PowerShell 5.1+ (or PowerShell 7.x on Windows).	
+	
 .LINK
     https://learn.microsoft.com/windows/win32/wua_sdk/windows-update-agent--wua--api-reference
     https://learn.microsoft.com/windows-server/administration/windows-server-update-services/
@@ -38,17 +50,7 @@
           
 
           TODO:
-		  
-.REQUIREMENTS
-    - Run as Administrator.
-    - Network connectivity and permissions to:
-        - \\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data
-        - \\<MDT_FileSrv>\Logs$\Custom\Configuration
-    - Write access to:
-        - C:\_it\
-        - C:\Windows\System32\
-        - C:\Program Files\WindowsPowerShell\Modules\
-    - PowerShell 5.1+ (or PowerShell 7.x on Windows).		
+		  	
 
 .OUTPUTS
     Console output and log file:
@@ -332,3 +334,4 @@ function Start-Configuration {
 
 
 Start-Configuration
+
