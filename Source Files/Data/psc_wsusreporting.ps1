@@ -30,6 +30,14 @@
       - Uses the WSUS Admin API (no PSWindowsUpdate dependency)
       - Stores exports like `SupersededUpdates*.csv` under an `Exports\` folder beside the script
       - `$VersionNumber` banner reflects the current build
+
+	Requirements:
+      - Run on the WSUS server with Administrator privileges.
+      - PowerShell 5.1+ (or PowerShell 7.x on Windows).
+      - WSUS Administration components available (Microsoft.UpdateServices.Administration).
+      - Local file system write access for logs/exports.
+	  - Internet connection to google and microsoft
+	  
 .LINK
 	https://learn.microsoft.com/en-us/windows/win32/wua_sdk/windows-update-agent--wua--api-reference
     https://learn.microsoft.com/de-de/security-updates/WindowsUpdateServices/18127651
@@ -63,12 +71,6 @@
 		  To-Do:
 			- 
 			
-.REQUIREMENTS
-    - Run on the WSUS server with Administrator privileges.
-    - PowerShell 5.1+ (or PowerShell 7.x on Windows).
-    - WSUS Administration components available (Microsoft.UpdateServices.Administration).
-    - Local file system write access for logs/exports.
-	- Internet connection to google and microsoft
 
 .OUTPUTS
     - Console dashboard (colorized).
@@ -4261,5 +4263,6 @@ function Start-EF_Gen-UpdateStatusReport {
 #### Main Menu Selection
 ####
 Show-Menu
+
 
 
