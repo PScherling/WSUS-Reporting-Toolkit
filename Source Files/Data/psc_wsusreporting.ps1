@@ -1170,7 +1170,7 @@ function Start-EF_Run-Cleanup {
 	<body>
 	<div id="main">
 		<div id="title">
-			<img id="ef_logo" src="Media/eurofunk_logo.png" alt="EF Logo">
+			<img id="default_logo" src="Media/Powershell_logo.png" alt="EF Logo">
 			<h1 id="title">WSUS Synchronization Report for $Hostname</h1>
             <table class="report-info">
 			<tbody>
@@ -4261,4 +4261,5 @@ function Start-EF_Gen-UpdateStatusReport {
 #### Main Menu Selection
 ####
 Show-Menu
+
 
