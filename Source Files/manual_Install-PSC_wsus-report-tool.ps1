@@ -18,6 +18,14 @@
       - Uses `$PSScriptRoot` to resolve its own `.\Data` source folder
       - Provides progress messages and clear success/error output
       - Includes robust try/catch error handling and logging for each step
+
+	Requirements:
+    - Run as Administrator.
+    - PowerShell 5.1+ (or PowerShell 7.x on Windows).
+    - Sufficient permissions to write to:
+        - C:\_it\
+        - C:\Windows\System32\
+        - C:\Program Files\WindowsPowerShell\Modules\
 	  
 .LINK
     https://learn.microsoft.com/windows/win32/wua_sdk/windows-update-agent--wua--api-reference
@@ -38,13 +46,6 @@
 
           TODO:
 
-.REQUIREMENTS
-    - Run as Administrator.
-    - PowerShell 5.1+ (or PowerShell 7.x on Windows).
-    - Sufficient permissions to write to:
-        - C:\_it\
-        - C:\Windows\System32\
-        - C:\Program Files\WindowsPowerShell\Modules\
 
 .OUTPUTS
     Console output and installer log:
@@ -321,3 +322,4 @@ function Start-Configuration {
 
 
 Start-Configuration
+
