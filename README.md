@@ -31,12 +31,15 @@ Includes automated and manual installers, a lightweight module launcher, and the
 
 | Path / Script | Purpose |
 |---|---|
-| `psc_wsusreporting.ps1` | Main interactive dashboard + reporting + cleanup actions (runs on WSUS server). |
-| `psc_wsusreporting.psm1` | Module launcher that opens the tool in a new, maximized PowerShell window. |
-| `manual_Install-PSC_wsus-report-tool.ps1` | Local/manual installer (uses local `.\Data` folder as source). |
-| `custom_Install-PSC_wsus-report-tool.ps1` | Automated installer for MDT/WDS (pulls from `\\<MDT_FileSrv>\DeploymentShare$`). |
 | `Data\` | Payload used by the installers (module files, launcher, any assets). |
 | `Logfiles\` | Local log directory used by the tool (created at runtime under `C:\_it\psc_wsusreporting\Logfiles`). |
+| `Data\launch_psc_wsusreporting.bat` | For starting and auto-launching the module. |
+| `Data\psc_wsusreporting.cmd` | For starting the main powershell script. |
+| `Data\psc_wsusreporting.ps1` | Main interactive dashboard + reporting + cleanup actions (runs on WSUS server). |
+| `Data\psc_wsusreporting.psm1` | Module launcher that opens the tool in a new, maximized PowerShell window. |
+| `manual_Install-PSC_wsus-report-tool.ps1` | Local/manual installer (uses local `.\Data` folder as source). |
+| `custom_Install-PSC_wsus-report-tool.ps1` | Automated installer for MDT/WDS (pulls from `\\<MDT_FileSrv>\DeploymentShare$`). |
+
 
 > The dashboard displays the value of `$VersionNumber` embedded in `psc_wsusreporting.ps1`.
 
