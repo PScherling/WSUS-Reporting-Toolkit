@@ -15,6 +15,10 @@
 
     Use this module after the tool has been installed (manual or automated installer),
     so operators can simply run `psc_wsusreporting` from any PowerShell prompt.
+
+	Requirements:
+    - PowerShell 5.1+ (or PowerShell 7.x on Windows)
+    - File present at: C:\_it\psc_wsusreporting\psc_wsusreporting.ps1		  
 	
 .LINK
 	https://learn.microsoft.com/windows-server/administration/windows-server-update-services/
@@ -35,9 +39,6 @@
 
           TODO:
 		  
-.REQUIREMENTS
-    - PowerShell 5.1+ (or PowerShell 7.x on Windows)
-    - File present at: C:\_it\psc_wsusreporting\psc_wsusreporting.ps1		  
 		
 .Example
 	PS C:\> Import-Module psc_wsusreporting
@@ -64,3 +65,4 @@ function psc_wsusreporting {
 	}
 
 }
+
