@@ -120,7 +120,7 @@ Key locations used by the solution:
 
 ## 🚀 Usage
 ### Start via desktop link (recommended)
-<img width="117" height="82" alt="image" src="https://github.com/user-attachments/assets/1c87d6d4-2061-4f52-b095-60682dde67d1" />
+<img width="123" height="71" alt="image" src="https://github.com/user-attachments/assets/0f0acf98-7ecc-48b6-b5f0-fd6df4b9e9e4" />
 
 ### Start via Module (recommended)
 ```powershell
