@@ -11,21 +11,13 @@
       - Copies `psc_wsusreporting.psm1/.psd1` into the module folder
       - Copies `psc_wsusreporting.cmd` into `C:\Windows\System32` for easy shell launch
       - Imports the `psc_wsusreporting` module
-      - Creates a desktop shortcut (EF_WSUS-Report-Tool.lnk) targeting `launch_psc_wsusreporting.bat`
-      - Writes timestamped logs to `C:\_it\<Configure_ef_psc_wsusreporting_*.log>`
+      - Creates a desktop shortcut (WSUS-Report-Tool.lnk) targeting `launch_psc_wsusreporting.bat`
+      - Writes timestamped logs to `C:\_it\<Configure_psc_wsusreporting_*.log>`
 
     The script is verbose and operator-friendly:
       - Uses `$PSScriptRoot` to resolve its own `.\Data` source folder
       - Provides progress messages and clear success/error output
       - Includes robust try/catch error handling and logging for each step
-
-	Requirements:
-    - Run as Administrator.
-    - PowerShell 5.1+ (or PowerShell 7.x on Windows).
-    - Sufficient permissions to write to:
-        - C:\_it\
-        - C:\Windows\System32\
-        - C:\Program Files\WindowsPowerShell\Modules\
 	  
 .LINK
     https://learn.microsoft.com/windows/win32/wua_sdk/windows-update-agent--wua--api-reference
@@ -46,10 +38,17 @@
 
           TODO:
 
+.REQUIREMENTS
+    - Run as Administrator.
+    - PowerShell 5.1+ (or PowerShell 7.x on Windows).
+    - Sufficient permissions to write to:
+        - C:\_it\
+        - C:\Windows\System32\
+        - C:\Program Files\WindowsPowerShell\Modules\
 
 .OUTPUTS
     Console output and installer log:
-        C:\_it\Configure_ef_psc_wsusreporting_<COMPUTERNAME>_<YYYY-MM-DD_HH-mm-ss>.log
+        C:\_it\Configure_psc_wsusreporting_<COMPUTERNAME>_<YYYY-MM-DD_HH-mm-ss>.log
 		
 .Example
 	PS C:\> .\manual_Install-PSC_wsus-report-tool.ps1
@@ -79,7 +78,7 @@ function Start-Configuration {
     $step6 = "false"
 	
 	# Log file path and function to log messages
-	$config = "ef_psc_wsusreporting"
+	$config = "psc_wsusreporting"
 	$CompName = $env:COMPUTERNAME
 	$DateTime = Get-Date -Format "yyyy-MM-dd_HH-mm-ss"
 	$logFileName = "Configure_$($config)_$($CompName)_$($DateTime).log"
@@ -278,7 +277,7 @@ function Start-Configuration {
 
 				# Define the desktop shortcut path
 				$desktop = [Environment]::GetFolderPath("Desktop")
-				$shortcutPath = Join-Path $desktop "EF_WSUS-Report-Tool.lnk"
+				$shortcutPath = Join-Path $desktop "WSUS-Report-Tool.lnk"
 
 				# Create the shortcut
 				$wsh = New-Object -ComObject WScript.Shell
@@ -320,6 +319,4 @@ function Start-Configuration {
 	Read-Host -prompt " Press any key to finish..."
 }
 
-
 Start-Configuration
-
