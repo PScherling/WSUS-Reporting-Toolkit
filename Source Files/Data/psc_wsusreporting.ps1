@@ -30,14 +30,6 @@
       - Uses the WSUS Admin API (no PSWindowsUpdate dependency)
       - Stores exports like `SupersededUpdates*.csv` under an `Exports\` folder beside the script
       - `$VersionNumber` banner reflects the current build
-
-	Requirements:
-      - Run on the WSUS server with Administrator privileges.
-      - PowerShell 5.1+ (or PowerShell 7.x on Windows).
-      - WSUS Administration components available (Microsoft.UpdateServices.Administration).
-      - Local file system write access for logs/exports.
-	  - Internet connection to google and microsoft
-	  
 .LINK
 	https://learn.microsoft.com/en-us/windows/win32/wua_sdk/windows-update-agent--wua--api-reference
     https://learn.microsoft.com/de-de/security-updates/WindowsUpdateServices/18127651
@@ -56,10 +48,10 @@
           Modified: 2025-09-25
 
           Version - 0.0.1 - () - Initial first attempt.
-		  Version - 0.0.2 - () - Start-EF_Gen-LastWSUSSynchronizationReport function finished
-		  Version - 0.0.3 - () - Start-EF_Gen-EndpointStatusReport function finished
-		  Version - 0.0.4 - () - Start-EF_Gen-UpdateStatusReport function WIP
-		  Version - 0.0.5 - () - Start-EF_Gen-UpdateStatusReport function finished
+		  Version - 0.0.2 - () - Start-Gen-LastWSUSSynchronizationReport function finished
+		  Version - 0.0.3 - () - Start-Gen-EndpointStatusReport function finished
+		  Version - 0.0.4 - () - Start-Gen-UpdateStatusReport function WIP
+		  Version - 0.0.5 - () - Start-Gen-UpdateStatusReport function finished
 		  Version - 0.0.6 - () - Bug fixing
 		  Version - 0.0.7 - () - Show in Sync Status; Bug fixing
           Version - 0.1.0 - () - Publishing Version 1.
@@ -71,6 +63,12 @@
 		  To-Do:
 			- 
 			
+.REQUIREMENTS
+    - Run on the WSUS server with Administrator privileges.
+    - PowerShell 5.1+ (or PowerShell 7.x on Windows).
+    - WSUS Administration components available (Microsoft.UpdateServices.Administration).
+    - Local file system write access for logs/exports.
+	- Internet connection to google and microsoft
 
 .OUTPUTS
     - Console dashboard (colorized).
@@ -107,7 +105,7 @@ function Write-Log {
 }
 
 # Start logging
-Write-Log " Starting ef_wsus-reporting..."
+Write-Log " Starting wsus-reporting..."
 	
 
 ####
@@ -577,11 +575,11 @@ function Show-Menu {
 		Write-Log " User Input: $choice"
 		switch ($choice) {
 			1 { Show-Menu }
-			2 { Start-EF_Gen-EndpointStatusReport }
-			3 { Start-EF_Gen-UpdateStatusReport }
-			4 { Start-EF_Gen-LastWSUSSynchronizationReport }
-			5 { Start-EF_Run-Cleanup }
-			6 { Start-EF_Run-Cleanup -SkipDecline }
+			2 { Start-Gen-EndpointStatusReport }
+			3 { Start-Gen-UpdateStatusReport }
+			4 { Start-Gen-LastWSUSSynchronizationReport }
+			5 { Start-Run-Cleanup }
+			6 { Start-Run-Cleanup -SkipDecline }
 			e { Exit }
 			default { 
 				Write-Log " Wrong Input."
@@ -596,7 +594,7 @@ function Show-Menu {
 ###
 ### WSUS Cleanup
 ###
-function Start-EF_Run-Cleanup {
+function Start-Run-Cleanup {
 	[CmdletBinding()]
 	Param(
 		[switch] $SkipDecline
@@ -636,7 +634,7 @@ function Start-EF_Run-Cleanup {
 	$countSupersededLastLevelExclusionPeriod = 0
 	$countDeclined = 0
 
-	function Start-EF_WSUS-Cleanup 
+	function Start-WSUS-Cleanup 
 	{
 		# Function to extract Details of Update
 		function Get-UpdateDetails($update) 
@@ -1172,7 +1170,7 @@ function Start-EF_Run-Cleanup {
 	<body>
 	<div id="main">
 		<div id="title">
-			<img id="default_logo" src="Media/Powershell_logo.png" alt="EF Logo">
+			<img id=""default_logo" src="Media/Powershell_logo.png" alt="Logo">
 			<h1 id="title">WSUS Synchronization Report for $Hostname</h1>
             <table class="report-info">
 			<tbody>
@@ -1187,7 +1185,7 @@ function Start-EF_Run-Cleanup {
 		}
 
 		###### Function Calls ######
-		Start-EF_WSUS-Cleanup
+		Start-WSUS-Cleanup
 
 		#Finish HTML Report
 		Add-Content $FilePath -Value @"
@@ -1200,7 +1198,7 @@ function Start-EF_Run-Cleanup {
 
 	}
 
-	function Start-EF_Run-DeleteSupersededUpdates 
+	function Start-Run-DeleteSupersededUpdates 
 	{
 		Write-Host "    Starting to delete superseded updates."
 		Write-Log "Starting to delete superseded updates."
@@ -1386,7 +1384,7 @@ function Start-EF_Run-Cleanup {
 			$choice = Read-Host " Choose an Option"
 			Write-Log " User Input: $choice"
 			switch ($choice) {
-				1 { Start-EF_Run-DeleteSupersededUpdates }
+				1 { Start-Run-DeleteSupersededUpdates }
 				e { Show-Menu }
 				default { 
 					Write-Log " Wrong Input."
@@ -1405,7 +1403,7 @@ function Start-EF_Run-Cleanup {
 ###
 ### Last Synchronization Report
 ###
-function Start-EF_Gen-LastWSUSSynchronizationReport {
+function Start-Gen-LastWSUSSynchronizationReport {
 	# Report Version
 	$LastSyncReportVersion = "0.3"
 	
@@ -1450,7 +1448,7 @@ function Start-EF_Gen-LastWSUSSynchronizationReport {
 
 		
 	
-	function Start-EF_WSUS-Reporting {
+	function Start-WSUS-Reporting {
 
 		# Function to extract Details of Update
 		function Get-UpdateDetails($update, $approvalStatus) {
@@ -2522,7 +2520,7 @@ function Start-EF_Gen-LastWSUSSynchronizationReport {
 	<body>
 	<div id="main">
 		<div id="title">
-			<img id="ef_logo" src="Media/eurofunk_logo.png" alt="EF Logo">
+			<img id="default_logo" src="Media/Powershell_logo.png" alt="Logo">
 			<h1 id="title">WSUS Synchronization Report for $Hostname</h1>
             <table class="report-info">
 			<tbody>
@@ -2537,7 +2535,7 @@ function Start-EF_Gen-LastWSUSSynchronizationReport {
 		}
 
 		###### Function Calls ######
-		Start-EF_WSUS-Reporting
+		Start-WSUS-Reporting
 
 		#Finish HTML Report
 		Add-Content $FilePath -Value @"
@@ -2627,7 +2625,7 @@ function Start-EF_Gen-LastWSUSSynchronizationReport {
 ###
 ### Endpoint Status Report
 ###
-function Start-EF_Gen-EndpointStatusReport {
+function Start-Gen-EndpointStatusReport {
 	# Report Version
 	$EndpointStatusReportVersion = "0.2"
 	
@@ -2649,7 +2647,7 @@ function Start-EF_Gen-EndpointStatusReport {
 	$HTMLReportFile = ""
 	$HTMLReportFileList = @()
 	
-	function Start-EF_Endpoint-Reporting {
+	function Start-Endpoint-Reporting {
 
 		Write-Progress -id 1 -Activity "Generating Endpoint Status Report" -Status "Generating Report:" -PercentComplete 10
 		Write-Log "Fetch WSUS Report Information."
@@ -3233,7 +3231,7 @@ function Start-EF_Gen-EndpointStatusReport {
 	<body>
 	<div id="main">
 		<div id="title">
-			<img id="ef_logo" src="Media/eurofunk_logo.png" alt="EF Logo">
+			<img id="default_logo" src="Media/Powershell_logo.png" alt="Logo">
 			<h1 id="title">WSUS Endpoint Report for $Hostname</h1>
             <table class="report-info">
 			<tbody>
@@ -3248,7 +3246,7 @@ function Start-EF_Gen-EndpointStatusReport {
 		}
 
 		###### Function Calls ######
-		Start-EF_Endpoint-Reporting
+		Start-Endpoint-Reporting
 
 		#Finish HTML Report
 		Add-Content $FilePath -Value @"
@@ -3338,7 +3336,7 @@ function Start-EF_Gen-EndpointStatusReport {
 ###
 ### Update Status Report
 ###
-function Start-EF_Gen-UpdateStatusReport {
+function Start-Gen-UpdateStatusReport {
 	# Report Version
 	$UpdateStatusReportVersion = "0.1"
 	
@@ -3362,7 +3360,7 @@ function Start-EF_Gen-UpdateStatusReport {
 	$HTMLReportFile = ""
 	$HTMLReportFileList = @()
 	
-	function Start-EF_Update-Reporting {
+	function Start-Update-Reporting {
 
 		Write-Progress -id 1 -Activity "Generating Updates Status Report" -Status "Generating Report:" -PercentComplete 10
 		Write-Log "Fetch WSUS Report Information."
@@ -4157,7 +4155,7 @@ function Start-EF_Gen-UpdateStatusReport {
 	<body>
 	<div id="main">
 		<div id="title">
-			<img id="ef_logo" src="Media/eurofunk_logo.png" alt="EF Logo">
+			<img id="default_logo" src="Media/Powershell_logo.png" alt="Logo">
 			<h1 id="title">WSUS Update Report for $Hostname</h1>
             <table class="report-info">
 			<tbody>
@@ -4172,7 +4170,7 @@ function Start-EF_Gen-UpdateStatusReport {
 		}
 
 		###### Function Calls ######
-		Start-EF_Update-Reporting
+		Start-Update-Reporting
 
 		#Finish HTML Report
 		Add-Content $FilePath -Value @"
@@ -4263,6 +4261,3 @@ function Start-EF_Gen-UpdateStatusReport {
 #### Main Menu Selection
 ####
 Show-Menu
-
-
-
