@@ -81,7 +81,7 @@ What it does:
 - Creates module path: `C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting`
 - Copies `psc_wsusreporting.psm1/.psd1` into module path
 - Copies `psc_wsusreporting.cmd` into `C:\Windows\System32`
-- Imports module, creates desktop shortcut **EF_WSUS-Report-Tool.lnk** to `launch_psc_wsusreporting.bat`
+- Imports module, creates desktop shortcut **WSUS-Report-Tool.lnk** to `launch_psc_wsusreporting.bat`
 - Logs locally then uploads to: `\\<MDT_FileSrv>\Logs$\Custom\Configuration`
 
 Run (as Admin) in your task sequence:
@@ -96,7 +96,7 @@ What it does:
 - Copies payload from local `.\Data` → `C:\_it\psc_wsusreporting`
 - Installs module files and `psc_wsusreporting.cmd`
 - Imports module, creates desktop shortcut
-- Logs to `C:\_it\Configure_ef_psc_wsusreporting_*.log`
+- Logs to `C:\_it\Configure_psc_wsusreporting_*.log`
 
 Run (as Admin):
 ```powershell
@@ -110,8 +110,8 @@ powershell.exe -ExecutionPolicy Bypass -File .\manual_Install-PSC_wsus-report-to
 Key locations used by the solution:
 
 - **Main tool logs**: `C:\_it\psc_wsusreporting\Logfiles\psc_wsusreporting.log`
-- **Installer logs** (pattern): `C:\_it\Configure_ef_psc_wsusreporting_<COMPUTERNAME>_<YYYY-MM-DD_HH-mm-ss>.log`
-- **Desktop shortcut**: `EF_WSUS-Report-Tool.lnk` → `C:\_it\psc_wsusreporting\launch_psc_wsusreporting.bat`
+- **Installer logs** (pattern): `C:\_it\Configure_psc_wsusreporting_<COMPUTERNAME>_<YYYY-MM-DD_HH-mm-ss>.log`
+- **Desktop shortcut**: `WSUS-Report-Tool.lnk` → `C:\_it\psc_wsusreporting\launch_psc_wsusreporting.bat`
 - **Module path**: `C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting\`
 
 > Update the installer variables for your deployment server (`$FileSrv`) and log share paths if needed.
