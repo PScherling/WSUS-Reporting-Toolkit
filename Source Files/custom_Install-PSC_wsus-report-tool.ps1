@@ -12,7 +12,7 @@
       - Copies module files (.psm1 / .psd1) into the module path
       - Copies launcher: C:\Windows\System32\psc_wsusreporting.cmd
       - Imports the `psc_wsusreporting` module
-      - Creates a desktop shortcut: “EF_WSUS-Report-Tool.lnk” → launch_psc_wsusreporting.bat
+      - Creates a desktop shortcut: “WSUS-Report-Tool.lnk” → launch_psc_wsusreporting.bat
       - Writes a timestamped installer log locally and uploads it to the deployment log share
 
     Operator experience:
@@ -20,18 +20,6 @@
       - Robust try/catch with explicit step logging
       - Local log at: C:\_it\Configure_psc_wsusreporting_<Computer>_<DateTime>.log
         and upload to: \\<MDT_FileSrv>\Logs$\Custom\Configuration
-
-	Requirements:
-    - Run as Administrator.
-    - Network connectivity and permissions to:
-        - \\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data
-        - \\<MDT_FileSrv>\Logs$\Custom\Configuration
-    - Write access to:
-        - C:\_it\
-        - C:\Windows\System32\
-        - C:\Program Files\WindowsPowerShell\Modules\
-    - PowerShell 5.1+ (or PowerShell 7.x on Windows).	
-	
 .LINK
     https://learn.microsoft.com/windows/win32/wua_sdk/windows-update-agent--wua--api-reference
     https://learn.microsoft.com/windows-server/administration/windows-server-update-services/
@@ -50,7 +38,17 @@
           
 
           TODO:
-		  	
+		  
+.REQUIREMENTS
+    - Run as Administrator.
+    - Network connectivity and permissions to:
+        - \\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data
+        - \\<MDT_FileSrv>\Logs$\Custom\Configuration
+    - Write access to:
+        - C:\_it\
+        - C:\Windows\System32\
+        - C:\Program Files\WindowsPowerShell\Modules\
+    - PowerShell 5.1+ (or PowerShell 7.x on Windows).		
 
 .OUTPUTS
     Console output and log file:
@@ -63,9 +61,9 @@
 #>
 function Start-Configuration {
     # Variables
-    $user = "wdsuser"
-    $pass = "Password"
-	$FileSrv = "0.0.0.0" # MDT Server IP-Address
+    $user = "wds.usr"
+    $pass = "YjVloU2hdKZEyN6em5Zu"
+	$FileSrv = "192.168.121.66"
 	
     $dest = "C:\_it\psc_wsusreporting"
     $source = "\\$($FileSrv)\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data"
@@ -273,7 +271,7 @@ function Start-Configuration {
 
 				# Define the desktop shortcut path
 				$desktop = [Environment]::GetFolderPath("Desktop")
-				$shortcutPath = Join-Path $desktop "EF_WSUS-Report-Tool.lnk"
+				$shortcutPath = Join-Path $desktop "WSUS-Report-Tool.lnk"
 
 				# Create the shortcut
 				$wsh = New-Object -ComObject WScript.Shell
@@ -332,6 +330,4 @@ function Start-Configuration {
 	}#>
 }
 
-
 Start-Configuration
-
