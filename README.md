@@ -21,6 +21,9 @@ Includes automated and manual installers, a lightweight module launcher, and the
 
 ---
 
+## Coming Features
+- **[PSC-SConfig](https://github.com/PScherling/psc_sconfig)** integration
+
 ## ✨ Features
 
 - **Interactive dashboard** (console UI) showing:
