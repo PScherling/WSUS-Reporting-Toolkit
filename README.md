@@ -216,12 +216,6 @@ A: Update the `$VersionNumber` variable inside `psc_wsusreporting.ps1`.
 
 ---
 
-## 🤝 Contributing
-
-Issues and PRs are welcome. Please avoid including real server names, IPs, or credentials in examples.
-
----
-
 ## 🔗 References
 
 - Windows Update Agent (WUA) API:  
