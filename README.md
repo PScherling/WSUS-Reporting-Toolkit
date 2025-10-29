@@ -6,8 +6,13 @@ Includes automated and manual installers, a lightweight module launcher, and the
 
 ---
 
-## Coming Features
+## 🧭 Coming Features
 - **[PSC-SConfig](https://github.com/PScherling/psc_sconfig)** integration
+- Optional publish of reports to a central, access-controlled share
+- Simplify optional HTML theme customization & branding
+- Additional WSUS health checks (database, IIS bindings, SSL validation)
+
+---
 
 ## ✨ Features
 
@@ -190,14 +195,6 @@ A: No. It uses the WSUS Administration API (`Microsoft.UpdateServices.Administra
 
 **Q: Where do I change the version number shown in the UI?**  
 A: Update the `$VersionNumber` variable inside `psc_wsusreporting.ps1`.
-
----
-
-## 🧭 Roadmap
-
-- Optional publish of reports to a central, access-controlled share
-- Optional HTML theme customization & branding
-- Additional WSUS health checks (database, IIS bindings, SSL validation)
 
 ---
 
