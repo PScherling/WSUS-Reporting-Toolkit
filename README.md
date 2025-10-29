@@ -232,4 +232,12 @@ Issues and PRs are welcome. Please avoid including real server names, IPs, or cr
 
 ---
 
-**Author:** Patrick Scherling (@Patrick Scherling)
+## 👤 Author
+
+**Author:** Patrick Scherling  
+**Contact:** @Patrick Scherling  
+
+---
+
+> ⚡ *“Automate. Standardize. Simplify.”*  
+> Part of Patrick Scherling’s IT automation suite for modern Windows Server infrastructure management.
