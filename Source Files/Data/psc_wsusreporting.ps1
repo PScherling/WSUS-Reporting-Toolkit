@@ -72,7 +72,7 @@
 
 .OUTPUTS
     - Console dashboard (colorized).
-    - Log file: C:\_it\psc_wsusreporting\Logfiles\psc_wsusreporting.log
+    - Log file: C:\_psc\psc_wsusreporting\Logfiles\psc_wsusreporting.log
     - HTML reports (saved to the script directory or designated report path).
     - CSV exports under: <script folder>\Exports\ (e.g., SupersededUpdates*.csv)
 	
@@ -80,7 +80,7 @@
     PS C:\> psc_wsusreporting
     (When the helper module is installed) Starts the tool in a new, maximized PowerShell window.
 
-	PS C:\> powershell.exe -ExecutionPolicy Bypass -File "C:\_it\psc_wsusreporting\psc_wsusreporting.ps1"
+	PS C:\> powershell.exe -ExecutionPolicy Bypass -File "C:\_psc\psc_wsusreporting\psc_wsusreporting.ps1"
     Launches the WSUS Reporting Tool and opens the interactive dashboard.
 #>
 
@@ -88,9 +88,9 @@
 $VersionNumber = "0.1.3"
 
 # Log file path
-$logFile = "C:\_it\psc_wsusreporting\Logfiles\psc_wsusreporting.log"
+$logFile = "C:\_psc\psc_wsusreporting\Logfiles\psc_wsusreporting.log"
 if(-not $logfile){
-    New-Item -Name "psc_wsusreporting.log" -Path "C:\_it\psc_wsusreporting\Logfiles" -ItemType "File"
+    New-Item -Name "psc_wsusreporting.log" -Path "C:\_psc\psc_wsusreporting\Logfiles" -ItemType "File"
 }
 
 # Function to log messages with timestamps
@@ -610,9 +610,9 @@ function Start-Run-Cleanup {
 	Write-Log "Start 'WSUS Cleanup Report' Logging."
 
 	$FileName = $Hostname+"_WU-Cleanup-Report_"+$DateTime+".html"
-	$RootDir = "C:\_it\psc_wsusreporting\"
-	$FileDir = "C:\_it\psc_wsusreporting\Exports\"
-	$MediaDir = "C:\_it\psc_wsusreporting\Exports\Media\"
+	$RootDir = "C:\_psc\psc_wsusreporting\"
+	$FileDir = "C:\_psc\psc_wsusreporting\Exports\"
+	$MediaDir = "C:\_psc\psc_wsusreporting\Exports\Media\"
 	$FilePath = "$FileDir$FileName"
 
 	$HTMLReportFileSelected = "false"
@@ -1073,7 +1073,7 @@ function Start-Run-Cleanup {
 
 	function ConvertToPDF {
 
-		#$reportname = Get-ChildItem -Path C:\_it\WSUS Files\WSUS_Reporting\Exports\*.html -Name
+		#$reportname = Get-ChildItem -Path C:\_psc\WSUS Files\WSUS_Reporting\Exports\*.html -Name
 		#$reportname = $global:HTMLReportFileName
 		$global:pdfPath = "$FileDir$htmlfilename.pdf"
 		
@@ -1124,7 +1124,7 @@ function Start-Run-Cleanup {
 		{
 			#Create Directory
 			Write-Log "Create Directory 'psc_wsusreporting'."
-			New-Item -Path "C:\_it\" -Name "psc_wsusreporting" -ItemType "directory"
+			New-Item -Path "C:\_psc\" -Name "psc_wsusreporting" -ItemType "directory"
 		}
 
 		If (-Not ( Test-Path $FileDir ))
@@ -1416,8 +1416,8 @@ function Start-Gen-LastWSUSSynchronizationReport {
 	# Create required directories
 	<#Write-Log "Create required directories."
 	$directories = @(
-		"C:\_it\psc_wsusreporting\Logfiles"
-		"C:\_it\psc_wsusreporting\Exports"
+		"C:\_psc\psc_wsusreporting\Logfiles"
+		"C:\_psc\psc_wsusreporting\Exports"
 	)
 
 	foreach ($dir in $directories) {
@@ -1435,9 +1435,9 @@ function Start-Gen-LastWSUSSynchronizationReport {
 	#>
 	
 	$FileName = $Hostname+"_WU-Sync-Report_"+$DateTime+".html"
-	$RootDir = "C:\_it\psc_wsusreporting\"
-	$FileDir = "C:\_it\psc_wsusreporting\Exports\"
-	$MediaDir = "C:\_it\psc_wsusreporting\Exports\Media\"
+	$RootDir = "C:\_psc\psc_wsusreporting\"
+	$FileDir = "C:\_psc\psc_wsusreporting\Exports\"
+	$MediaDir = "C:\_psc\psc_wsusreporting\Exports\Media\"
 	$FilePath = "$FileDir$FileName"
 
 	$HTMLReportFileSelected = "false"
@@ -2424,7 +2424,7 @@ function Start-Gen-LastWSUSSynchronizationReport {
 
 	function ConvertToPDF {
 
-		#$reportname = Get-ChildItem -Path C:\_it\WSUS Files\WSUS_Reporting\Exports\*.html -Name
+		#$reportname = Get-ChildItem -Path C:\_psc\WSUS Files\WSUS_Reporting\Exports\*.html -Name
 		#$reportname = $global:HTMLReportFileName
 		$global:pdfPath = "$FileDir$htmlfilename.pdf"
 		
@@ -2474,7 +2474,7 @@ function Start-Gen-LastWSUSSynchronizationReport {
 		{
 			#Create Directory
 			Write-Log "Create Directory 'psc_wsusreporting'."
-			New-Item -Path "C:\_it\" -Name "psc_wsusreporting" -ItemType "directory"
+			New-Item -Path "C:\_psc\" -Name "psc_wsusreporting" -ItemType "directory"
 		}
 
 		If (-Not ( Test-Path $FileDir ))
@@ -2636,9 +2636,9 @@ function Start-Gen-EndpointStatusReport {
 	Write-Log "Start 'Endpoint Status Report' Logging."
 	
 	$FileName = $Hostname+"_EndpointStatus-Report_"+$DateTime+".html"
-	$RootDir = "C:\_it\psc_wsusreporting\"
-	$FileDir = "C:\_it\psc_wsusreporting\Exports\"
-	$MediaDir = "C:\_it\psc_wsusreporting\Exports\Media\"
+	$RootDir = "C:\_psc\psc_wsusreporting\"
+	$FileDir = "C:\_psc\psc_wsusreporting\Exports\"
+	$MediaDir = "C:\_psc\psc_wsusreporting\Exports\Media\"
 	$FilePath = "$FileDir$FileName"
 
 	$HTMLReportFileSelected = "false"
@@ -3133,7 +3133,7 @@ function Start-Gen-EndpointStatusReport {
 
 	function ConvertToPDF {
 
-		#$reportname = Get-ChildItem -Path C:\_it\WSUS Files\WSUS_Reporting\Exports\*.html -Name
+		#$reportname = Get-ChildItem -Path C:\_psc\WSUS Files\WSUS_Reporting\Exports\*.html -Name
 		#$reportname = $global:HTMLReportFileName
 		$global:pdfPath = "$FileDir$htmlfilename.pdf"
 		
@@ -3183,7 +3183,7 @@ function Start-Gen-EndpointStatusReport {
 		{
 			#Create Directory
 			Write-Log "Create Directory 'psc_wsusreporting'."
-			New-Item -Path "C:\_it\" -Name "psc_wsusreporting" -ItemType "directory"
+			New-Item -Path "C:\_psc\" -Name "psc_wsusreporting" -ItemType "directory"
 		}
 
 		If (-Not ( Test-Path $FileDir ))
@@ -3349,9 +3349,9 @@ function Start-Gen-UpdateStatusReport {
 	Write-Log "Start 'Update Status Report' Logging."
 	
 	$FileName = $Hostname+"_"+$ReportName+"_"+$DateTime+".html"
-	$RootDir = "C:\_it\psc_wsusreporting\"
-	$FileDir = "C:\_it\psc_wsusreporting\Exports\"
-	$MediaDir = "C:\_it\psc_wsusreporting\Exports\Media\"
+	$RootDir = "C:\_psc\psc_wsusreporting\"
+	$FileDir = "C:\_psc\psc_wsusreporting\Exports\"
+	$MediaDir = "C:\_psc\psc_wsusreporting\Exports\Media\"
 	$FilePath = "$FileDir$FileName"
 
 	$HTMLReportFileSelected = "false"
@@ -4057,7 +4057,7 @@ function Start-Gen-UpdateStatusReport {
 	
 	function ConvertToPDF {
 
-		#$reportname = Get-ChildItem -Path C:\_it\WSUS Files\WSUS_Reporting\Exports\*.html -Name
+		#$reportname = Get-ChildItem -Path C:\_psc\WSUS Files\WSUS_Reporting\Exports\*.html -Name
 		#$reportname = $global:HTMLReportFileName
 		$global:pdfPath = "$FileDir$htmlfilename.pdf"
 		
@@ -4107,7 +4107,7 @@ function Start-Gen-UpdateStatusReport {
 		{
 			#Create Directory
 			Write-Log "Create Directory 'psc_wsusreporting'."
-			New-Item -Path "C:\_it\" -Name "psc_wsusreporting" -ItemType "directory"
+			New-Item -Path "C:\_psc\" -Name "psc_wsusreporting" -ItemType "directory"
 		}
 
 		If (-Not ( Test-Path $FileDir ))
@@ -4261,3 +4261,4 @@ function Start-Gen-UpdateStatusReport {
 #### Main Menu Selection
 ####
 Show-Menu
+
