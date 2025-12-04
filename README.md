@@ -40,7 +40,7 @@ Includes automated and manual installers, a lightweight module launcher, and the
 | Path / Script | Purpose |
 |---|---|
 | `Data\` | Payload used by the installers (module files, launcher, any assets). |
-| `Logfiles\` | Local log directory used by the tool (created at runtime under `C:\_it\psc_wsusreporting\Logfiles`). |
+| `Logfiles\` | Local log directory used by the tool (created at runtime under `C:\_psc\psc_wsusreporting\Logfiles`). |
 | `Data\launch_psc_wsusreporting.bat` | For starting and auto-launching the module. |
 | `Data\psc_wsusreporting.cmd` | For starting the main powershell script. |
 | `Data\psc_wsusreporting.ps1` | Main interactive dashboard + reporting + cleanup actions (runs on WSUS server). |
@@ -70,7 +70,7 @@ Includes automated and manual installers, a lightweight module launcher, and the
 Use: `custom_Install-PSC_wsus-report-tool.ps1`
 
 What it does:
-- Copies payload from: `\\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data` → `C:\_it\psc_wsusreporting`
+- Copies payload from: `\\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data` → `C:\_psc\psc_wsusreporting`
 - Creates module path: `C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting`
 - Copies `psc_wsusreporting.psm1/.psd1` into module path
 - Copies `psc_wsusreporting.cmd` into `C:\Windows\System32`
@@ -86,10 +86,10 @@ powershell.exe -ExecutionPolicy Bypass -File .\custom_Install-PSC_wsus-report-to
 Use: `manual_Install-PSC_wsus-report-tool.ps1`
 
 What it does:
-- Copies payload from local `.\Data` → `C:\_it\psc_wsusreporting`
+- Copies payload from local `.\Data` → `C:\_psc\psc_wsusreporting`
 - Installs module files and `psc_wsusreporting.cmd`
 - Imports module, creates desktop shortcut
-- Logs to `C:\_it\Configure_psc_wsusreporting_*.log`
+- Logs to `C:\_psc\Configure_psc_wsusreporting_*.log`
 
 Run (as Admin):
 ```powershell
@@ -102,9 +102,9 @@ powershell.exe -ExecutionPolicy Bypass -File .\manual_Install-PSC_wsus-report-to
 
 Key locations used by the solution:
 
-- **Main tool logs**: `C:\_it\psc_wsusreporting\Logfiles\psc_wsusreporting.log`
-- **Installer logs** (pattern): `C:\_it\Configure_psc_wsusreporting_<COMPUTERNAME>_<YYYY-MM-DD_HH-mm-ss>.log`
-- **Desktop shortcut**: `WSUS-Report-Tool.lnk` → `C:\_it\psc_wsusreporting\launch_psc_wsusreporting.bat`
+- **Main tool logs**: `C:\_psc\psc_wsusreporting\Logfiles\psc_wsusreporting.log`
+- **Installer logs** (pattern): `C:\_psc\Configure_psc_wsusreporting_<COMPUTERNAME>_<YYYY-MM-DD_HH-mm-ss>.log`
+- **Desktop shortcut**: `WSUS-Report-Tool.lnk` → `C:\_psc\psc_wsusreporting\launch_psc_wsusreporting.bat`
 - **Module path**: `C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting\`
 
 > Update the installer variables for your deployment server (`$FileSrv`) and log share paths if needed.
@@ -123,7 +123,7 @@ psc_wsusreporting
 
 ### Start via Script
 ```powershell
-powershell.exe -ExecutionPolicy Bypass -File "C:\_it\psc_wsusreporting\psc_wsusreporting.ps1"
+powershell.exe -ExecutionPolicy Bypass -File "C:\_psc\psc_wsusreporting\psc_wsusreporting.ps1"
 ```
 
 You’ll see the **Windows Server Update Services Reporting Tool** menu. Use the keys shown to generate HTML reports, run cleanup, or refresh.
@@ -155,7 +155,7 @@ You’ll see the **Windows Server Update Services Reporting Tool** menu. Use the
 ## 📝 Logging
 
 The tool uses a simple `Write-Log` function to append timestamped entries:
-- `C:\_it\psc_wsusreporting\Logfiles\psc_wsusreporting.log`
+- `C:\_psc\psc_wsusreporting\Logfiles\psc_wsusreporting.log`
 
 Installers write their own **timestamped** logs and (for automated installs) attempt to upload them to your deployment log share.
 
