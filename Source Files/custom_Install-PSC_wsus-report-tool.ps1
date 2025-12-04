@@ -7,7 +7,7 @@
 
     What it does:
       - Copies all files from: \\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data
-        to: C:\_it\psc_wsusreporting  (preserves subfolders)
+        to: C:\_psc\psc_wsusreporting  (preserves subfolders)
       - Creates the module path: C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting
       - Copies module files (.psm1 / .psd1) into the module path
       - Copies launcher: C:\Windows\System32\psc_wsusreporting.cmd
@@ -18,7 +18,7 @@
     Operator experience:
       - Uses `$PSScriptRoot`-independent network source with progress output
       - Robust try/catch with explicit step logging
-      - Local log at: C:\_it\Configure_psc_wsusreporting_<Computer>_<DateTime>.log
+      - Local log at: C:\_psc\Configure_psc_wsusreporting_<Computer>_<DateTime>.log
         and upload to: \\<MDT_FileSrv>\Logs$\Custom\Configuration
 .LINK
     https://learn.microsoft.com/windows/win32/wua_sdk/windows-update-agent--wua--api-reference
@@ -45,14 +45,14 @@
         - \\<MDT_FileSrv>\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data
         - \\<MDT_FileSrv>\Logs$\Custom\Configuration
     - Write access to:
-        - C:\_it\
+        - C:\_psc\
         - C:\Windows\System32\
         - C:\Program Files\WindowsPowerShell\Modules\
     - PowerShell 5.1+ (or PowerShell 7.x on Windows).		
 
 .OUTPUTS
     Console output and log file:
-        Local   : C:\_it\Configure_psc_wsusreporting_<COMPUTERNAME>_<YYYY-MM-DD_HH-mm-ss>.log
+        Local   : C:\_psc\Configure_psc_wsusreporting_<COMPUTERNAME>_<YYYY-MM-DD_HH-mm-ss>.log
         Remote  : \\<MDT_FileSrv>\Logs$\Custom\Configuration\<same name>.log
 		
 .Example
@@ -65,7 +65,7 @@ function Start-Configuration {
     $pass = "YjVloU2hdKZEyN6em5Zu"
 	$FileSrv = "192.168.121.66"
 	
-    $dest = "C:\_it\psc_wsusreporting"
+    $dest = "C:\_psc\psc_wsusreporting"
     $source = "\\$($FileSrv)\DeploymentShare$\Scripts\custom\psc_wsusreporting\Data"
 	# Get all files and subdirectories from the source folder, including hidden/system files
 	$items = Get-ChildItem -Path $source -Recurse
@@ -86,7 +86,7 @@ function Start-Configuration {
 	$logFilePath = "\\$($FileSrv)\Logs$\Custom\Configuration"
 	$logFile = "$($logFilePath)\$($logFileName)"
 
-	$localLogFilePath = "C:\_it"
+	$localLogFilePath = "C:\_psc"
 	$localLogFile = "$($localLogFilePath)\$($logFileName)"
 	
 	# Function to log messages with timestamps
@@ -112,7 +112,7 @@ function Start-Configuration {
                 # Create Directory
                 try {
                     Write-Log "Creating target directory: $dest"
-                    New-Item -Path "C:\_it\" -Name "psc_wsusreporting" -ItemType "directory"
+                    New-Item -Path "C:\_psc\" -Name "psc_wsusreporting" -ItemType "directory"
                 } catch {
                     Write-Log "Error: Directory can not be created: $_"
                     break
@@ -199,7 +199,7 @@ function Start-Configuration {
                 try {
                     Write-Log "Copying psc_wsusreporting.cmd to System32"
 					Write-Host " Copying psc_wsusreporting.cmd to System32"
-                    copy-item "C:\_it\psc_wsusreporting\psc_wsusreporting.cmd" -Destination "C:\Windows\System32\"
+                    copy-item "C:\_psc\psc_wsusreporting\psc_wsusreporting.cmd" -Destination "C:\Windows\System32\"
                     for ($i = 0; $i -le 100; $i = $i + 10) {
                         Write-Progress -Activity "File copy in Progress" -Status "File Copy Progress $i% Complete:" -PercentComplete $i
                         Start-Sleep -Milliseconds 250
@@ -221,7 +221,7 @@ function Start-Configuration {
                 try {
                     Write-Log "Copying psc_wsusreporting.psm1 to PowerShell Modules"
 					Write-Host " Copying psc_wsusreporting.psm1 to PowerShell Modules"
-                    copy-item "C:\_it\psc_wsusreporting\psc_wsusreporting.psm1" -Destination "C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting\"
+                    copy-item "C:\_psc\psc_wsusreporting\psc_wsusreporting.psm1" -Destination "C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting\"
                 } catch {
                     Write-Log "Error: File copy failed for psc_wsusreporting.psm1: $_"
 					Write-Warning " Error: File copy failed for psc_wsusreporting.psm1: $_"
@@ -233,7 +233,7 @@ function Start-Configuration {
                 try {
                     Write-Log "Copying psc_wsusreporting.psd1 to PowerShell Modules"
 					Write-Host " Copying psc_wsusreporting.psd1 to PowerShell Modules"
-                    copy-item "C:\_it\psc_wsusreporting\psc_wsusreporting.psd1" -Destination "C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting\"
+                    copy-item "C:\_psc\psc_wsusreporting\psc_wsusreporting.psd1" -Destination "C:\Program Files\WindowsPowerShell\Modules\psc_wsusreporting\"
                 } catch {
                     Write-Log "Error: File copy failed for psc_wsusreporting.psd1: $_"
 					Write-Warning " Error: File copy failed for psc_wsusreporting.psd1: $_"
@@ -267,7 +267,7 @@ function Start-Configuration {
 			try{
 				 Write-Log "Creating desktop shortcut for psc_wsusreporting"
 				# Full path to your .bat file
-				$batFilePath = "C:\_it\psc_wsusreporting\launch_psc_wsusreporting.bat"
+				$batFilePath = "C:\_psc\psc_wsusreporting\launch_psc_wsusreporting.bat"
 
 				# Define the desktop shortcut path
 				$desktop = [Environment]::GetFolderPath("Desktop")
@@ -331,3 +331,4 @@ function Start-Configuration {
 }
 
 Start-Configuration
+
