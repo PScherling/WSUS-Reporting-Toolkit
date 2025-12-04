@@ -11,7 +11,7 @@
 
 @media print {
 	th {
-		background-color: #ca003b !important;
+		background-color: #2596be !important;
 		print-color-adjust: exact; 
 	}
 	body {
@@ -150,7 +150,7 @@ td.chart div.pieChart {
 }
 
 th {
-	background-color: #ca003b;
+	background-color: #2596be;
 }
 
 img#default_logo {
@@ -169,7 +169,7 @@ img.icon {
 }
 
 a {
-	color: #ca003b;
+	color: #2596be;
 }
 
 a:hover {
@@ -227,3 +227,4 @@ table.list-Updates td:nth-child(3) {
     width: 40%;
 
 }
+
