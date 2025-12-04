@@ -5,7 +5,7 @@
 .DESCRIPTION
     The `psc_wsusreporting.psm1` module exposes a single entry-point function, `psc_wsusreporting`,
     which starts the WSUS Reporting Tool UI by launching:
-        C:\_it\psc_wsusreporting\psc_wsusreporting.ps1
+        C:\_psc\psc_wsusreporting\psc_wsusreporting.ps1
     in a new, maximized PowerShell process with `-ExecutionPolicy Bypass`.
 
     Behavior:
@@ -18,7 +18,7 @@
 
 	Requirements:
     - PowerShell 5.1+ (or PowerShell 7.x on Windows)
-    - File present at: C:\_it\psc_wsusreporting\psc_wsusreporting.ps1		  
+    - File present at: C:\_psc\psc_wsusreporting\psc_wsusreporting.ps1		  
 	
 .LINK
 	https://learn.microsoft.com/windows-server/administration/windows-server-update-services/
@@ -49,7 +49,7 @@
 #>
 
 function psc_wsusreporting {
-	$pscwsusreporting = "C:\_it\psc_wsusreporting\psc_wsusreporting.ps1"
+	$pscwsusreporting = "C:\_psc\psc_wsusreporting\psc_wsusreporting.ps1"
 	if($pscwsusreporting){
 		try{
 			Start-Process -FilePath "$PSHOME\powershell.exe" -ArgumentList "-windowstyle maximized -ExecutionPolicy Bypass -File $pscwsusreporting" #-PassThru
@@ -65,4 +65,5 @@ function psc_wsusreporting {
 	}
 
 }
+
 
