@@ -14,7 +14,7 @@ The goal of this document is to provide a high-level overview of how you can get
 Have a question? Rather than opening an issue, please ask a question in [discussions][1].
 Your well-worded question will serve as a resource to others searching for help.
 
-  [1]: https://github.com/PScherling/psc_wsusreporting/discussions
+  [1]: https://github.com/PScherling/WSUS-Reporting-Toolkit/discussions
 
 ## Reporting issues
 
@@ -43,7 +43,7 @@ Use a reaction in place of a "+1" comment:
 
 When you are ready to contribute a fix or feature:
 
-- Start by [forking the psc_wsusreporting repo][github-fork].
+- Start by [forking the WSUS-Reporting-Toolkit repo][github-fork].
 - Create a new branch from main in your fork.
 - Add commits in your branch.
   - If you have updated module code also update `CHANGELOG.md`.
@@ -116,4 +116,4 @@ Thank you for taking the time to contribute.
 [github-fork]: https://help.github.com/en/github/getting-started-with-github/fork-a-repo
 [github-pr]: https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests
 [github-pr-create]: https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork
-[issues]: https://github.com/PScherling/psc_wsusreporting/issues
+[issues]: https://github.com/PScherling/WSUS-Reporting-Toolkit/issues
