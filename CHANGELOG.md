@@ -16,3 +16,4 @@ Version 0.1.4
 | **0.1.2** | 12/Aug/2025 | Hot Fix | Fixing PowerShell Syntax Errors |  |  |  |
 | **0.1.3** | 23/Sep/2025 | Minor Release | Adding WSUS Cleanup Functions | WSUS Cleanup | Endpoint HTML Report | Endpoint Report Issue in HTML Report -> Device to Group mapping not correct |
 | **0.1.4** | 25/Sep/2025 | Hot Fix | Fixed Endpoint Report |  |  |  |
+| **0.1.5** | TBD | Hot Fix | Catching a bug in installation scripts in Step 1 in case you have blank spaces in the source path |  |  |  |
