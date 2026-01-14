@@ -1,6 +1,7 @@
 ![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue)
 ![Platform](https://img.shields.io/badge/Platform-Windows-blue)
 ![Audience](https://img.shields.io/badge/Audience-Enterprise-informational)
+![Maintenance](https://img.shields.io/badge/Maintained-Yes-success)
 
 # PSC WSUS Reporting Toolkit
 <img width="1596" height="874" alt="image" src="https://github.com/user-attachments/assets/020e3988-7ffb-49e3-85b7-00776839921d" />
