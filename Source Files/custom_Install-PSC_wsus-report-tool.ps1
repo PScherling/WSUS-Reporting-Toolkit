@@ -12,7 +12,7 @@
       - Copies module files (.psm1 / .psd1) into the module path
       - Copies launcher: C:\Windows\System32\psc_wsusreporting.cmd
       - Imports the `psc_wsusreporting` module
-      - Creates a desktop shortcut: “WSUS-Report-Tool.lnk” → launch_psc_wsusreporting.bat
+      - Creates a desktop shortcut: "WSUS-Report-Tool.lnk" -> launch_psc_wsusreporting.bat
       - Writes a timestamped installer log locally and uploads it to the deployment log share
 
     Operator experience:
@@ -32,9 +32,10 @@
           Contact: @Patrick Scherling
           Primary: @Patrick Scherling
           Created: 2025-05-28
-          Modified: 2025-05-28
+          Modified: 2026-01-14
 
           Version - 0.0.1 - () - Finalized functional version 1.
+		  Version - 0.0.2 - (2026-01-14) - Catching a bug in Step 1 in case you have blank spaces in the source path
           
 
           TODO:
@@ -144,9 +145,9 @@ function Start-Configuration {
 						}
 						else {
 							# If it's a file, copy it
-							Write-Host "Download file: $item.FullName to $targetItemPath"
-							Write-Log " Download file: $item.FullName to $targetItemPath"
-							Copy-Item -Path $item.FullName -Destination $targetItemPath -Force
+							Write-Host "Download file: $($item.FullName) to $targetItemPath"
+							Write-Log " Download file: $($item.FullName) to $targetItemPath"
+							Copy-Item -Path "$($item.FullName)" -Destination $targetItemPath -Force
 						}
 						
 						#Progress Bar
@@ -331,4 +332,5 @@ function Start-Configuration {
 }
 
 Start-Configuration
+
 
